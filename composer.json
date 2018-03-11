@@ -1,0 +1,32 @@
+{
+  "name": "gerpo/plugisto",
+  "description": "A plugin system for laravel",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Adam Marciniak",
+      "email": "adamarc@web.de"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Gerpo\\Plugisto\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Plugisto\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Gerpo\\Plugisto\\PlugistoServiceProvider"
+      ]
+    }
+  },
+  "require-dev": {
+    "orchestra/testbench": "~3.0",
+    "phpunit/phpunit": "^7.0"
+  }
+}
