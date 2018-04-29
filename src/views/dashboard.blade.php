@@ -10,7 +10,7 @@
     <title>Plugisto Packages</title>
 </head>
 <body class="container">
-<div class="d-flex flex-wrap">
+<div class="d-flex flex-wrap">  
     @foreach($packages as $package)
         <a href="{{ $package->route }}">
             <div class="card m-3">
