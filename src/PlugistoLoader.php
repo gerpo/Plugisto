@@ -50,14 +50,15 @@ class PlugistoLoader
             'route' => 'string',
             'namespace' => 'required|unique:plugisto'
         ]);
-        if ($validator->failed()) {
-            array_push($this->failedPackages, $package);
+
+        if ($validator->fails()) {
+            $this->failedPackages[] = $package;
             return;
         }
         
         $package['is_active'] = false;
 
-        Plugisto::updateOrCreate($package);
+        Plugisto::create($package);
     }
 
     private function transformRawData($package, $namespace)

@@ -125,13 +125,13 @@ class LoaderTest extends TestCase
         Plugisto::create($oldComposerPackage);
         Plugisto::create($oldManualPackage);
 
-        $this->assertDatabaseHas('plugisto',  $oldComposerPackage);
-        $this->assertDatabaseHas('plugisto',  $oldManualPackage);
+        $this->assertDatabaseHas('plugisto', $oldComposerPackage);
+        $this->assertDatabaseHas('plugisto', $oldManualPackage);
 
         $this->loader->build();
 
         $this->assertDatabaseMissing('plugisto', $oldComposerPackage);
-        $this->assertDatabaseHas('plugisto',  $oldManualPackage);
+        $this->assertDatabaseHas('plugisto', $oldManualPackage);
     }
 
     /** @test */
@@ -149,6 +149,26 @@ class LoaderTest extends TestCase
         $this->assertDatabaseHas('plugisto', $oldPackage);
 
         $this->loader->build(false);
+
+        $this->assertDatabaseHas('plugisto', $oldPackage);
+    }
+
+    /** @test */
+    public function already_saved_packages_are_unchanged_after_rerun(): void
+    {
+        // The namespace is the same as in the dummy composer installed.json, only the route is different.
+        $oldPackage = [
+            'name' => 'package_b_name',
+            'description' => 'This is a plugisto plugin',
+            'route' => '/old-route',
+            'namespace' => 'vendor_a/package_b'
+        ];
+
+        Plugisto::create($oldPackage);
+
+        $this->assertDatabaseHas('plugisto', $oldPackage);
+
+        $this->loader->build();
 
         $this->assertDatabaseHas('plugisto', $oldPackage);
     }
