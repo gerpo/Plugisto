@@ -57,7 +57,7 @@ class PlugistoLoader
         
         $package['is_active'] = false;
 
-        Plugisto::create($package);
+        Plugisto::updateOrCreate($package);
     }
 
     private function transformRawData($package, $namespace)
