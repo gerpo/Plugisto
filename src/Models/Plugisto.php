@@ -2,10 +2,8 @@
 
 namespace Gerpo\Plugisto\Models;
 
-
 use Gerpo\Plugisto\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Model;
-
 
 class Plugisto extends Model
 {
@@ -15,7 +13,7 @@ class Plugisto extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
-        'manually_added' => 'boolean'
+        'manually_added' => 'boolean',
     ];
 
     protected static function boot()
@@ -28,20 +26,21 @@ class Plugisto extends Model
     public function activate()
     {
         $this->update([
-            'is_active' => true
+            'is_active' => true,
         ]);
     }
 
     public function deactivate()
     {
         $this->update([
-            'is_active' => false
+            'is_active' => false,
         ]);
     }
 
     public function scopeAllowed($query, array $permissions)
     {
         array_push($permissions, null);
+
         return $query->whereIn('needed_permission', $permissions);
     }
 }

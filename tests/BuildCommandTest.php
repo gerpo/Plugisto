@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Gerpo\plugisto\tests;
-
 
 use Plugisto\Tests\TestCase;
 

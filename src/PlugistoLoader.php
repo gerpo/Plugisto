@@ -1,13 +1,11 @@
 <?php
 
-
 namespace Gerpo\Plugisto;
 
-
-use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
+use Illuminate\Support\Collection;
 use Gerpo\Plugisto\Models\Plugisto;
 use Gerpo\Plugisto\Scopes\ActiveScope;
-use Illuminate\Support\Collection;
+use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
 
 class PlugistoLoader
 {
@@ -18,7 +16,7 @@ class PlugistoLoader
 
     public function __construct()
     {
-        $this->vendorPath = base_path("vendor");
+        $this->vendorPath = base_path('vendor');
     }
 
     /**
@@ -48,14 +46,15 @@ class PlugistoLoader
             'name' => 'required|string',
             'description' => 'nullable',
             'route' => 'string',
-            'namespace' => 'required|unique:plugisto'
+            'namespace' => 'required|unique:plugisto',
         ]);
 
         if ($validator->fails()) {
             $this->failedPackages[] = $package;
+
             return;
         }
-        
+
         $package['is_active'] = false;
 
         Plugisto::create($package);
@@ -66,8 +65,8 @@ class PlugistoLoader
         return [
             'name' => $package['name'],
             'description' => $package['description'] ?? '',
-            'route' => $package['route'] ?? '/' . str_replace('/', '-', $namespace),
-            'namespace' => $namespace
+            'route' => $package['route'] ?? '/'.str_replace('/', '-', $namespace),
+            'namespace' => $namespace,
         ];
     }
 
@@ -76,7 +75,7 @@ class PlugistoLoader
      */
     private function detectPackages()
     {
-        if (!file_exists($path = $this->vendorPath . '/composer/installed.json')) {
+        if (! file_exists($path = $this->vendorPath.'/composer/installed.json')) {
             throw new InvalidVendorPathException($this->vendorPath);
         }
 
@@ -100,5 +99,4 @@ class PlugistoLoader
     {
         return $this->detectedPackages->toArray() ?? [];
     }
-
 }

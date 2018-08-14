@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Gerpo\Plugisto\Commands;
 
-
-use Gerpo\Plugisto\Models\Plugisto;
 use Illuminate\Console\Command;
+use Gerpo\Plugisto\Models\Plugisto;
 use Illuminate\Database\Eloquent\Collection;
 
 class ListPackagesCommand extends Command
@@ -16,22 +14,16 @@ class ListPackagesCommand extends Command
 
     public function handle()
     {
-
         $packages = Plugisto::all();
 
         if ($packages->isEmpty()) {
-
-            $this->info("No plugisto packages installed.");
-
+            $this->info('No plugisto packages installed.');
         } else {
-
-            $this->line("Installed plugisto packages:");
+            $this->line('Installed plugisto packages:');
 
             $headers = ['Name', 'Description', 'Route', 'Status'];
             $this->table($headers, $this->transformArray($packages));
-
         }
-
     }
 
     /**
@@ -47,7 +39,7 @@ class ListPackagesCommand extends Command
                     'Description' => $package['description'],
                     'Route' => $package['route'],
                     'Status' => $package['is_active'] ? 'Active' : 'Inactive',
-                ]
+                ],
             ];
         });
     }

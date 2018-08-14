@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Plugisto\Tests;
 
-
-use Gerpo\Plugisto\Models\Plugisto;
 use Gerpo\Plugisto\PlugistoLoader;
+use Gerpo\Plugisto\Models\Plugisto;
 
 class DashboardControllerTest extends TestCase
 {
@@ -19,7 +17,7 @@ class DashboardControllerTest extends TestCase
         $this->artisan('vendor:publish', ['--provider' => 'Gerpo\Plugisto\PlugistoServiceProvider']);
 
         $this->loader = app()->make(PlugistoLoader::class);
-        $this->loader->vendorPath = __DIR__ . '/fixtures';
+        $this->loader->vendorPath = __DIR__.'/fixtures';
 
         $this->loader->build();
     }
