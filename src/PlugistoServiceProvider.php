@@ -13,7 +13,7 @@ class PlugistoServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/plugisto.php' => config_path('plugisto.php'),
+            __DIR__ . '/Config/plugisto.php' => config_path('plugisto.php'),
         ]);
 
         $this->registerRouteMacro();
@@ -25,7 +25,7 @@ class PlugistoServiceProvider extends ServiceProvider
 
         if (config('plugisto.auto_load_routes', true)) {
 
-            $this->loadRoutesFrom(__DIR__ . '/routes/routes.php');
+            $this->loadRoutesFrom(__DIR__ . '/Routes/routes.php');
 
         }
     }
@@ -43,12 +43,12 @@ class PlugistoServiceProvider extends ServiceProvider
 
     public function exportViews()
     {
-        $this->loadViewsFrom(__DIR__ . '/views', 'plugisto');
+        $this->loadViewsFrom(__DIR__ . '/Views', 'plugisto');
     }
 
     public function exportMigrations()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/Migrations');
     }
 
     public function registerCommands()
