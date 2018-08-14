@@ -15,7 +15,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Plugisto\\Tests\\": "tests/"
+      "Plugisto\\Tests\\": "tests"
     }
   },
   "extra": {
@@ -26,7 +26,6 @@
     }
   },
   "require-dev": {
-    "orchestra/testbench": "~3.0",
-    "phpunit/phpunit": "^7.0"
+    "orchestra/testbench": "^3.6"
   }
 }

@@ -92,7 +92,7 @@ class PlugistoLoader
     {
         Plugisto::withoutGlobalScope(ActiveScope::class)
             ->where('manually_added', false)
-            ->whereNotIn('namespace', $this->detectedPackages->keys())
+            ->whereNotIn('namespace', $this->detectedPackages->keys()->toArray())
             ->delete();
     }
 
