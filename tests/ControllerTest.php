@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Plugisto\Tests;
 
-
-use Gerpo\Plugisto\Models\Plugisto;
 use Gerpo\Plugisto\PlugistoLoader;
+use Gerpo\Plugisto\Models\Plugisto;
 use Gerpo\Plugisto\Scopes\ActiveScope;
 
 class ControllerTest extends TestCase
@@ -21,7 +19,7 @@ class ControllerTest extends TestCase
         $this->artisan('vendor:publish', ['--provider' => 'Gerpo\Plugisto\PlugistoServiceProvider']);
 
         $this->loader = app()->make(PlugistoLoader::class);
-        $this->loader->vendorPath = __DIR__ . '/fixtures';
+        $this->loader->vendorPath = __DIR__.'/fixtures';
 
         $this->loader->build();
     }
@@ -81,12 +79,12 @@ class ControllerTest extends TestCase
             'name' => 'package',
             'namespace' => 'namespace/manual',
             'route' => '/route',
-            'manually_added' => true
+            'manually_added' => true,
         ])->toArray();
 
         $this->assertDatabaseHas('plugisto', $package);
 
-        $this->delete('/plugisto/' . $package['id'])
+        $this->delete('/plugisto/'.$package['id'])
             ->assertSuccessful();
 
         $this->assertDatabaseMissing('plugisto', $package);
@@ -98,12 +96,12 @@ class ControllerTest extends TestCase
         $package = Plugisto::create([
             'name' => 'package',
             'namespace' => 'namespace/manual',
-            'route' => '/route'
+            'route' => '/route',
         ])->toArray();
 
         $this->assertDatabaseHas('plugisto', $package);
 
-        $this->delete('/plugisto/' . $package['id'])
+        $this->delete('/plugisto/'.$package['id'])
             ->assertSuccessful();
 
         $this->assertDatabaseHas('plugisto', $package);

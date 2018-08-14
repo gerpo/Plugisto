@@ -1,12 +1,10 @@
 <?php
 
-
 namespace Plugisto\Tests;
 
-
-use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
-use Gerpo\Plugisto\Models\Plugisto;
 use Gerpo\Plugisto\PlugistoLoader;
+use Gerpo\Plugisto\Models\Plugisto;
+use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
 
 class LoaderTest extends TestCase
 {
@@ -22,7 +20,7 @@ class LoaderTest extends TestCase
         $this->artisan('migrate', ['--database' => 'testing']);
 
         $this->loader = app()->make(PlugistoLoader::class);
-        $this->loader->vendorPath = __DIR__ . '/fixtures';
+        $this->loader->vendorPath = __DIR__.'/fixtures';
 
         $this->defineTestData();
     }
@@ -33,14 +31,14 @@ class LoaderTest extends TestCase
             'name' => 'package_a_name',
             'description' => '',
             'namespace' => 'vendor_a/package_a',
-            'route' => '/vendor_a-package_a'
+            'route' => '/vendor_a-package_a',
         ];
 
         $this->packageB = [
             'name' => 'package_b_name',
             'description' => 'This is a plugisto plugin',
             'namespace' => 'vendor_a/package_b',
-            'route' => '/package-mail'
+            'route' => '/package-mail',
         ];
     }
 
@@ -53,16 +51,14 @@ class LoaderTest extends TestCase
 
         $this->assertEquals(
             [
-                'vendor_a/package_a' =>
-                    [
-                        'name' => 'package_a_name'
+                'vendor_a/package_a' => [
+                        'name' => 'package_a_name',
                     ],
-                'vendor_a/package_b' =>
-                    [
+                'vendor_a/package_b' => [
                         'name' => 'package_b_name',
                         'description' => 'This is a plugisto plugin',
-                        'route' => '/package-mail'
-                    ]
+                        'route' => '/package-mail',
+                    ],
             ], $packages);
     }
 
@@ -92,7 +88,7 @@ class LoaderTest extends TestCase
             'name' => 'old_package_name',
             'description' => 'old description',
             'route' => '/testroute',
-            'namespace' => 'old/namespace'
+            'namespace' => 'old/namespace',
         ];
 
         Plugisto::create($oldPackage);
@@ -111,7 +107,7 @@ class LoaderTest extends TestCase
             'name' => 'old_composer_name',
             'description' => 'old description',
             'route' => '/testroute1',
-            'namespace' => 'oldComposer/namespace'
+            'namespace' => 'oldComposer/namespace',
         ];
 
         $oldManualPackage = [
@@ -119,7 +115,7 @@ class LoaderTest extends TestCase
             'description' => 'old description',
             'route' => '/testroute1',
             'namespace' => 'old/namespace',
-            'manually_added' => true
+            'manually_added' => true,
         ];
 
         Plugisto::create($oldComposerPackage);
@@ -141,7 +137,7 @@ class LoaderTest extends TestCase
             'name' => 'old_package_name',
             'description' => 'old description',
             'route' => '/testroute',
-            'namespace' => 'old/namespace'
+            'namespace' => 'old/namespace',
         ];
 
         Plugisto::create($oldPackage);
@@ -161,7 +157,7 @@ class LoaderTest extends TestCase
             'name' => 'package_b_name',
             'description' => 'This is a plugisto plugin',
             'route' => '/old-route',
-            'namespace' => 'vendor_a/package_b'
+            'namespace' => 'vendor_a/package_b',
         ];
 
         Plugisto::create($oldPackage);
@@ -177,7 +173,7 @@ class LoaderTest extends TestCase
     public function loader_throws_exception_when_vendor_path_not_valid()
     {
         $loader = new PlugistoLoader();
-        $loader->vendorPath = "invalid-Path";
+        $loader->vendorPath = 'invalid-Path';
 
         $this->expectException(InvalidVendorPathException::class);
 

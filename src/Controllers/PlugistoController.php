@@ -2,14 +2,13 @@
 
 namespace Gerpo\Plugisto\Controllers;
 
-use Gerpo\Plugisto\Models\Plugisto;
-use Gerpo\Plugisto\Scopes\ActiveScope;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Gerpo\Plugisto\Models\Plugisto;
+use Gerpo\Plugisto\Scopes\ActiveScope;
 
 class PlugistoController extends Controller
 {
-
     public function index()
     {
         $packages = Plugisto::withoutGlobalScope(ActiveScope::class)->get();
@@ -21,7 +20,7 @@ class PlugistoController extends Controller
     {
         $request->validate([
             'data.*.id' => 'integer|required',
-            'data.*.is_active' => 'boolean|required'
+            'data.*.is_active' => 'boolean|required',
         ]);
 
         $packages = $request->get('data');
@@ -33,16 +32,14 @@ class PlugistoController extends Controller
 
             $model->update($package);
         }
-
     }
 
     public function destroy($id)
     {
-        if (($plugisto = Plugisto::withoutGlobalScope(ActiveScope::class)->findOrFail($id)) == null || !$plugisto->manually_added) {
+        if (($plugisto = Plugisto::withoutGlobalScope(ActiveScope::class)->findOrFail($id)) == null || ! $plugisto->manually_added) {
             return;
         }
 
         $plugisto->delete();
     }
-
 }

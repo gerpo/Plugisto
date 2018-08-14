@@ -2,9 +2,9 @@
 
 namespace Gerpo\Plugisto\Commands;
 
-use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
-use Gerpo\Plugisto\PlugistoLoader;
 use Illuminate\Console\Command;
+use Gerpo\Plugisto\PlugistoLoader;
+use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
 
 class BuildPackagesCommand extends Command
 {
@@ -25,26 +25,18 @@ class BuildPackagesCommand extends Command
     public function handle()
     {
         try {
-
-            $this->loader->build(!$this->option('no-cleanup'));
+            $this->loader->build(! $this->option('no-cleanup'));
 
             if (empty($packages = $this->loader->getDetectedPackages())) {
-
-                $this->info("No plugisto packages found.");
-
+                $this->info('No plugisto packages found.');
             } else {
-
-                $this->line("Detected plugisto packages:");
+                $this->line('Detected plugisto packages:');
 
                 $headers = ['Name', 'Description', 'Route'];
                 $this->table($headers, $this->loader->getDetectedPackages());
-
             }
-
         } catch (InvalidVendorPathException $e) {
-
-            $this->error('Vendor path is invalid: ' . $e->getMessage());
-
+            $this->error('Vendor path is invalid: '.$e->getMessage());
         }
     }
 }
