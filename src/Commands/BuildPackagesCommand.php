@@ -9,7 +9,7 @@ use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
 class BuildPackagesCommand extends Command
 {
     protected $signature = 'plugisto:build 
-                            {--no-cleanup=false : Removed packages will not be removes}';
+                            {--no-cleanup=false : Removed packages will not be removed}';
 
     protected $description = 'Detects all plugisto packages that are loaded with composer.';
 
