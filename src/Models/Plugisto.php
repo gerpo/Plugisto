@@ -9,7 +9,15 @@ class Plugisto extends Model
 {
     protected $table = 'plugisto';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'description',
+        'route',
+        'namespace',
+        'is_active',
+        'manually_added',
+        'needed_permission'
+    ];
 
     protected $casts = [
         'is_active' => 'boolean',

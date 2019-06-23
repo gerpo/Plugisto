@@ -2,9 +2,10 @@
 
 namespace Plugisto\Tests;
 
-use Gerpo\Plugisto\PlugistoLoader;
-use Gerpo\Plugisto\Models\Plugisto;
 use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
+use Gerpo\Plugisto\Models\Plugisto;
+use Gerpo\Plugisto\PlugistoLoader;
+use Mockery;
 
 class LoaderTest extends TestCase
 {
@@ -20,12 +21,12 @@ class LoaderTest extends TestCase
         $this->artisan('migrate', ['--database' => 'testing']);
 
         $this->loader = app()->make(PlugistoLoader::class);
-        $this->loader->vendorPath = __DIR__.'/fixtures';
+        $this->loader->vendorPath = __DIR__ . '/fixtures';
 
         $this->defineTestData();
     }
 
-    private function defineTestData()
+    private function defineTestData(): void
     {
         $this->packageA = [
             'name' => 'package_a_name',
@@ -43,7 +44,7 @@ class LoaderTest extends TestCase
     }
 
     /** @test */
-    public function new_plugin_gets_detected()
+    public function new_plugin_gets_detected(): void
     {
         $this->loader->build();
 
@@ -52,28 +53,30 @@ class LoaderTest extends TestCase
         $this->assertEquals(
             [
                 'vendor_a/package_a' => [
-                        'name' => 'package_a_name',
-                    ],
+                    'name' => 'package_a_name',
+                    'install-command' => 'testcommand:install',
+                ],
                 'vendor_a/package_b' => [
-                        'name' => 'package_b_name',
-                        'description' => 'This is a plugisto plugin',
-                        'route' => '/package-mail',
-                    ],
+                    'name' => 'package_b_name',
+                    'description' => 'This is a plugisto plugin',
+                    'route' => '/package-mail',
+                    'install-command' => 'testcommand:install',
+                ],
             ], $packages);
     }
 
     /** @test */
-    public function packages_without_plugisto_info_are_not_detected()
+    public function packages_without_plugisto_info_are_not_detected(): void
     {
         $this->loader->build();
 
         $packages = $this->loader->getDetectedPackages();
 
-        $this->assertFalse(in_array('vendor_a/package_c', $packages));
+        $this->assertNotContains('vendor_a/package_c', $packages);
     }
 
     /** @test */
-    public function new_plugin_is_saved_in_database()
+    public function new_plugin_is_saved_in_database(): void
     {
         $this->loader->build();
 
@@ -82,7 +85,7 @@ class LoaderTest extends TestCase
     }
 
     /** @test */
-    public function removed_packages_are_deleted_from_the_database()
+    public function removed_packages_are_deleted_from_the_database(): void
     {
         $oldPackage = [
             'name' => 'old_package_name',
@@ -101,7 +104,7 @@ class LoaderTest extends TestCase
     }
 
     /** @test */
-    public function only_composer_packages_are_removed_from_database()
+    public function only_composer_packages_are_removed_from_database(): void
     {
         $oldComposerPackage = [
             'name' => 'old_composer_name',
@@ -131,7 +134,7 @@ class LoaderTest extends TestCase
     }
 
     /** @test */
-    public function removed_packages_are_not_deleted_from_the_database_when_cleanUp_false()
+    public function removed_packages_are_not_deleted_from_the_database_when_cleanUp_false(): void
     {
         $oldPackage = [
             'name' => 'old_package_name',
@@ -170,7 +173,41 @@ class LoaderTest extends TestCase
     }
 
     /** @test */
-    public function loader_throws_exception_when_vendor_path_not_valid()
+    public function package_install_command_is_run_if_auto_install_is_true(): void
+    {
+        $testCommand = Mockery::mock('Gerpo\plugisto\tests\helpers\TestCommand[handle]');
+        $testCommand->shouldReceive('handle')->twice();
+        $this->app['Illuminate\Contracts\Console\Kernel']->registerCommand($testCommand);
+
+        $this->loader->build();
+    }
+
+    /** @test */
+    public function package_install_command_is_not_run_if_auto_install_is_false(): void
+    {
+        config(['plugisto.auto_install' => false]);
+        $testCommand = Mockery::mock('Gerpo\plugisto\tests\helpers\TestCommand[handle]');
+        $testCommand->shouldNotReceive('handle');
+        $this->app['Illuminate\Contracts\Console\Kernel']->registerCommand($testCommand);
+
+        $this->loader->build();
+    }
+
+    /** @test */
+    public function package_install_command_is_not_run_for_old_packages(): void
+    {
+        Plugisto::create($this->packageA);
+        $this->assertDatabaseHas('plugisto', $this->packageA);
+
+        $testCommand = Mockery::mock('Gerpo\plugisto\tests\helpers\TestCommand[handle]');
+        $testCommand->shouldReceive('handle')->once();
+        $this->app['Illuminate\Contracts\Console\Kernel']->registerCommand($testCommand);
+
+        $this->loader->build();
+    }
+
+    /** @test */
+    public function loader_throws_exception_when_vendor_path_not_valid(): void
     {
         $loader = new PlugistoLoader();
         $loader->vendorPath = 'invalid-Path';

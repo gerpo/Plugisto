@@ -2,8 +2,8 @@
 
 namespace Gerpo\Plugisto\Commands;
 
-use Illuminate\Console\Command;
 use Gerpo\Plugisto\Models\Plugisto;
+use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 
 class ListPackagesCommand extends Command
@@ -12,7 +12,7 @@ class ListPackagesCommand extends Command
 
     protected $description = 'Lists all plugisto packages that currently installed.';
 
-    public function handle()
+    public function handle(): void
     {
         $packages = Plugisto::all();
 

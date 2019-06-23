@@ -6,6 +6,7 @@ use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
 use Gerpo\Plugisto\Models\Plugisto;
 use Gerpo\Plugisto\Scopes\ActiveScope;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
 
 class PlugistoLoader
 {
@@ -13,10 +14,12 @@ class PlugistoLoader
     /** @var Collection */
     private $detectedPackages;
     private $failedPackages = [];
+    private $installedPackages;
 
     public function __construct()
     {
         $this->vendorPath = base_path('vendor');
+        $this->installedPackages = collect();
     }
 
     /**
@@ -32,7 +35,7 @@ class PlugistoLoader
             $this->cleanUpRemovedPackages();
         }
 
-        if (config('plugisto.auto_install')) {
+        if (config('plugisto.auto_install', true)) {
             $this->installPackages();
         }
     }
@@ -61,7 +64,7 @@ class PlugistoLoader
 
         $package['is_active'] = false;
 
-        Plugisto::create($package);
+        $this->installedPackages->push(Plugisto::create($package));
     }
 
     private function transformRawData($package, $namespace): array
@@ -99,11 +102,25 @@ class PlugistoLoader
             ->delete();
     }
 
-    private function installPackages()
+    private function installPackages(): void
     {
-        $this->detectedPackages->each(function($package) {
-            dump($package);
+        $this->newPackages()->each(function ($package) {
+            $this->installPackage($package->namespace);
         });
+    }
+
+    private function newPackages()
+    {
+        return $this->installedPackages->filter(function ($package) {
+            return $package->wasRecentlyCreated;
+        });
+    }
+
+    private function installPackage($namespace): void
+    {
+        if (array_key_exists('install-command', $package = $this->detectedPackages->get($namespace))) {
+            Artisan::call($package['install-command']);
+        };
     }
 
     public function getDetectedPackages(): array

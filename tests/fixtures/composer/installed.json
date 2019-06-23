@@ -17,7 +17,8 @@
         ]
       },
       "plugisto": {
-        "name": "package_a_name"
+        "name": "package_a_name",
+        "install-command": "testcommand:install"
       }
     }
   },
@@ -27,7 +28,8 @@
       "plugisto": {
         "name": "package_b_name",
         "description": "This is a plugisto plugin",
-        "route": "/package-mail"
+        "route": "/package-mail",
+        "install-command": "testcommand:install"
       }
     }
   },
