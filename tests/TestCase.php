@@ -4,7 +4,7 @@ namespace Plugisto\Tests;
 
 
 
-use Plugisto\Tests\Helpers\TestCommand;
+use Plugisto\Tests\helpers\TestCommand;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {

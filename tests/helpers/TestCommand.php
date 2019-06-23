@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Plugisto\Tests\Helpers;
+namespace Plugisto\Tests\helpers;
 
 
 use Illuminate\Console\Command;
