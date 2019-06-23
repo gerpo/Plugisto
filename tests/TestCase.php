@@ -2,7 +2,9 @@
 
 namespace Plugisto\Tests;
 
-use Gerpo\plugisto\tests\helpers\TestCommand;
+
+
+use Plugisto\Tests\Helpers\TestCommand;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {

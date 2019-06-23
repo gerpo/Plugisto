@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Gerpo\plugisto\tests\helpers;
+namespace Plugisto\Tests\Helpers;
 
 
 use Illuminate\Console\Command;
