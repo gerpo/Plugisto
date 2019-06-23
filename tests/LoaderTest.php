@@ -14,7 +14,7 @@ class LoaderTest extends TestCase
     private $packageA;
     private $packageB;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -9,7 +9,7 @@ class DashboardControllerTest extends TestCase
 {
     private $loader;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

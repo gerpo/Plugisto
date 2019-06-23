@@ -3,24 +3,17 @@
 namespace Plugisto\Tests;
 
 use Gerpo\plugisto\tests\helpers\TestCommand;
-use Gerpo\plugisto\tests\helpers\TestServiceProvider;
-use Mockery;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
-    /**
-     * @var Mockery\MockInterface|Gerpo\plugisto\tests\helpers\TestCommand[handle]
-     */
-    private $testCommand;
-
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->app['Illuminate\Contracts\Console\Kernel']->registerCommand(new TestCommand());
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return ['Gerpo\Plugisto\PlugistoServiceProvider'];
     }

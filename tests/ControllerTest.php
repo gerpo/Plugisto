@@ -11,7 +11,7 @@ class ControllerTest extends TestCase
     /** @var PlugistoLoader */
     private $loader;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
