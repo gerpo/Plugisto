@@ -49,6 +49,6 @@ class Plugisto extends Model
     {
         array_push($permissions, null);
 
-        return $query->whereIn('needed_permission', $permissions);
+        return $query->whereIn('needed_permission', $permissions)->orWhere('needed_permission', null);
     }
 }
