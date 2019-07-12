@@ -31,14 +31,14 @@ class Plugisto extends Model
         static::addGlobalScope(new ActiveScope());
     }
 
-    public function activate()
+    public function activate(): void
     {
         $this->update([
             'is_active' => true,
         ]);
     }
 
-    public function deactivate()
+    public function deactivate(): void
     {
         $this->update([
             'is_active' => false,
@@ -49,6 +49,6 @@ class Plugisto extends Model
     {
         array_push($permissions, null);
 
-        return $query->whereIn('needed_permission', $permissions)->orWhere('needed_permission', null);
+        return $query->whereIn('needed_permission', $permissions)->orWhereNull('needed_permission');
     }
 }
