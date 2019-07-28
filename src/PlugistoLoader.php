@@ -53,6 +53,7 @@ class PlugistoLoader
             'name' => 'required|string',
             'description' => 'nullable',
             'route' => 'string',
+            'needed_permission' => 'string',
             'namespace' => 'required|unique:plugisto',
         ]);
 
@@ -73,6 +74,7 @@ class PlugistoLoader
             'name' => $package['name'],
             'description' => $package['description'] ?? '',
             'route' => $package['route'] ?? '/' . str_replace('/', '-', $namespace),
+            'needed_permission' => $package['needed_permission'] ?? '',
             'namespace' => $namespace,
         ];
     }
