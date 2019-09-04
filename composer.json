@@ -18,6 +18,9 @@
       "Plugisto\\Tests\\": "tests"
     }
   },
+  "require": {
+    "laravel/framework": "6.*"
+  },
   "extra": {
     "laravel": {
       "providers": [
@@ -26,6 +29,7 @@
     }
   },
   "require-dev": {
-    "orchestra/testbench": "^3.6"
+    "roave/security-advisories": "dev-master",
+    "orchestra/testbench": "^4.0"
   }
 }
