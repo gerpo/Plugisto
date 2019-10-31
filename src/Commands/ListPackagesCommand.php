@@ -2,8 +2,8 @@
 
 namespace Gerpo\Plugisto\Commands;
 
-use Gerpo\Plugisto\Models\Plugisto;
 use Illuminate\Console\Command;
+use Gerpo\Plugisto\Models\Plugisto;
 use Illuminate\Database\Eloquent\Collection;
 
 class ListPackagesCommand extends Command

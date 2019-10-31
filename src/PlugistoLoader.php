@@ -2,11 +2,11 @@
 
 namespace Gerpo\Plugisto;
 
-use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
+use Illuminate\Support\Collection;
 use Gerpo\Plugisto\Models\Plugisto;
 use Gerpo\Plugisto\Scopes\ActiveScope;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
+use Gerpo\Plugisto\Exceptions\InvalidVendorPathException;
 
 class PlugistoLoader
 {
@@ -73,7 +73,7 @@ class PlugistoLoader
         return [
             'name' => $package['name'],
             'description' => $package['description'] ?? '',
-            'route' => $package['route'] ?? '/' . str_replace('/', '-', $namespace),
+            'route' => $package['route'] ?? '/'.str_replace('/', '-', $namespace),
             'needed_permission' => $package['needed_permission'] ?? '',
             'namespace' => $namespace,
         ];
@@ -84,7 +84,7 @@ class PlugistoLoader
      */
     private function detectPackages()
     {
-        if (!file_exists($path = $this->vendorPath . '/composer/installed.json')) {
+        if (! file_exists($path = $this->vendorPath.'/composer/installed.json')) {
             throw new InvalidVendorPathException($this->vendorPath);
         }
 
@@ -122,7 +122,7 @@ class PlugistoLoader
     {
         if (array_key_exists('install-command', $package = $this->detectedPackages->get($namespace))) {
             Artisan::call($package['install-command']);
-        };
+        }
     }
 
     public function getDetectedPackages(): array
