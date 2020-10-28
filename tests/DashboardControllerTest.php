@@ -2,8 +2,8 @@
 
 namespace Plugisto\Tests;
 
-use Gerpo\Plugisto\PlugistoLoader;
 use Gerpo\Plugisto\Models\Plugisto;
+use Gerpo\Plugisto\PlugistoLoader;
 
 class DashboardControllerTest extends TestCase
 {
