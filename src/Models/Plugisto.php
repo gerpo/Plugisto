@@ -16,7 +16,7 @@ class Plugisto extends Model
         'namespace',
         'is_active',
         'manually_added',
-        'needed_permission'
+        'needed_permission',
     ];
 
     protected $casts = [

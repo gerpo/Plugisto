@@ -147,7 +147,7 @@ class LoaderTest extends TestCase
     /** @test */
     public function package_install_command_is_run_if_auto_install_is_true(): void
     {
-        $testCommand = Mockery::mock(TestCommand::class . '[handle]');
+        $testCommand = Mockery::mock(TestCommand::class.'[handle]');
         $testCommand->shouldReceive('handle')->twice();
         $this->app['Illuminate\Contracts\Console\Kernel']->registerCommand($testCommand);
 
@@ -158,7 +158,7 @@ class LoaderTest extends TestCase
     public function package_install_command_is_not_run_if_auto_install_is_false(): void
     {
         config(['plugisto.auto_install' => false]);
-        $testCommand = Mockery::mock(TestCommand::class . '[handle]');
+        $testCommand = Mockery::mock(TestCommand::class.'[handle]');
         $testCommand->shouldNotReceive('handle');
         $this->app['Illuminate\Contracts\Console\Kernel']->registerCommand($testCommand);
 
@@ -171,7 +171,7 @@ class LoaderTest extends TestCase
         Plugisto::create($this->packageA);
         $this->assertDatabaseHas('plugisto', $this->packageA);
 
-        $testCommand = Mockery::mock(TestCommand::class . '[handle]');
+        $testCommand = Mockery::mock(TestCommand::class.'[handle]');
         $testCommand->shouldReceive('handle')->once();
         $this->app['Illuminate\Contracts\Console\Kernel']->registerCommand($testCommand);
 
@@ -196,7 +196,7 @@ class LoaderTest extends TestCase
         $this->artisan('migrate', ['--database' => 'testing']);
 
         $this->loader = app()->make(PlugistoLoader::class);
-        $this->loader->vendorPath = __DIR__ . '/fixtures';
+        $this->loader->vendorPath = __DIR__.'/fixtures';
 
         $this->defineTestData();
     }

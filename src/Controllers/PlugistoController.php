@@ -2,10 +2,10 @@
 
 namespace Gerpo\Plugisto\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Gerpo\Plugisto\Models\Plugisto;
 use Gerpo\Plugisto\Scopes\ActiveScope;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class PlugistoController extends Controller
 {

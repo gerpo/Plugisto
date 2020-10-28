@@ -25,7 +25,7 @@ class BuildPackagesCommand extends Command
     public function handle(): void
     {
         try {
-            $this->loader->build(!$this->option('no-cleanup'));
+            $this->loader->build(! $this->option('no-cleanup'));
 
             if (empty($packages = $this->loader->getDetectedPackages())) {
                 $this->info('No plugisto packages found.');
@@ -36,7 +36,7 @@ class BuildPackagesCommand extends Command
                 $this->table($headers, $this->loader->getDetectedPackages());
             }
         } catch (InvalidVendorPathException $e) {
-            $this->error('Vendor path is invalid: ' . $e->getMessage());
+            $this->error('Vendor path is invalid: '.$e->getMessage());
         }
     }
 }

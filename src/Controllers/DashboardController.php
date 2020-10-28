@@ -2,8 +2,8 @@
 
 namespace Gerpo\Plugisto\Controllers;
 
-use Illuminate\Routing\Controller;
 use Gerpo\Plugisto\Models\Plugisto;
+use Illuminate\Routing\Controller;
 
 class DashboardController extends Controller
 {
